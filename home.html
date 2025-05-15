@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصفحة الرئيسية - Redxplet</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #f7f7f7;
+      direction: rtl;
+      text-align: center;
+    }
+    header {
+      background-color: #ff4b2b;
+      color: white;
+      padding: 15px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+    main {
+      flex: 1;
+      padding: 40px 20px;
+    }
+    .username {
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+    .edit-name {
+      color: #ff4b2b;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+    .inspirational-words {
+      font-size: 18px;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto 50px auto;
+      line-height: 1.6;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 15px 0;
+      font-weight: bold;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .modal-content button {
+      background-color: #ff4b2b;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+    .modal-content button:hover {
+      background-color: #e84328;
+    }
+  </style>
+</head>
+<body>
+
+  <header id="profile-header">الملف الشخصي</header>
+
+  <main>
+    <div class="username" id="username-display">مرحباً، مستخدم جديد!</div>
+    <div class="edit-name" id="edit-name-btn">تغيير الاسم</div>
+
+    <div class="inspirational-words">
+      كل يوم هو فرصة جديدة لتحقيق أحلامك، لا تتوقف عن الإيمان بنفسك وبقدرتك على التغيير. <br />
+      النجاح يبدأ بخطوة، فلتكن هذه الخطوة اليوم. <br />
+      الإبداع لا حدود له، فاستمر في التعلم والتطوير. <br />
+      التفاؤل هو سر القوة في مواجهة التحديات. <br />
+      لا تخف من الفشل، فهو درس ثمين نحو النجاح.
+    </div>
+  </main>
+
+  <footer>Redxplet</footer>
+
+  <!-- Modal to change username -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3>تغيير الاسم</h3>
+      <input type="text" id="new-username" placeholder="أدخل اسمك الجديد" />
+      <button id="save-name-btn">حفظ</button>
+    </div>
+  </div>
+
+  <script>
+    const usernameDisplay = document.getElementById('username-display');
+    const editNameBtn = document.getElementById('edit-name-btn');
+    const modal = document.getElementById('modal');
+    const newUsernameInput = document.getElementById('new-username');
+    const saveNameBtn = document.getElementById('save-name-btn');
+
+    // Load saved username from localStorage or default
+    let currentUsername = localStorage.getItem('username') || 'مستخدم جديد';
+    usernameDisplay.textContent = `مرحباً، ${currentUsername}!`;
+
+    // Show modal on clicking "تغيير الاسم"
+    editNameBtn.addEventListener('click', () => {
+      newUsernameInput.value = currentUsername;
+      modal.style.display = 'flex';
+      newUsernameInput.focus();
+    });
+
+    // Save new username
+    saveNameBtn.addEventListener('click', () => {
+      const newName = newUsernameInput.value.trim();
+      if (newName) {
+        currentUsername = newName;
+        localStorage.setItem('username', currentUsername);
+        usernameDisplay.textContent = `مرحباً، ${currentUsername}!`;
+        modal.style.display = 'none';
+      } else {
+        alert('الرجاء إدخال اسم صالح');
+      }
+    });
+
+    // Close modal if clicked outside modal-content
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Optional: عند الضغط على عنوان الملف الشخصي يمكن أيضاً فتح تعديل الاسم
+    document.getElementById('profile-header').addEventListener('click', () => {
+      editNameBtn.click();
+    });
+  </script>
+</body>
+  </html>
