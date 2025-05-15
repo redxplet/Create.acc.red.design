@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إنشاء حساب - Red Design</title>
   <style>
     body {
@@ -14,7 +14,6 @@
       justify-content: center;
       height: 100vh;
     }
-
     .auth-box {
       background: #fff;
       padding: 40px 30px;
@@ -24,18 +23,15 @@
       max-width: 400px;
       text-align: center;
     }
-
     h2 {
       color: #ff4b2b;
       margin-bottom: 10px;
     }
-
     .slogan {
       font-size: 14px;
       color: #888;
       margin-bottom: 25px;
     }
-
     input {
       width: 100%;
       padding: 12px;
@@ -44,12 +40,10 @@
       border-radius: 8px;
       transition: border-color 0.3s;
     }
-
     input:focus {
       border-color: #ff4b2b;
       outline: none;
     }
-
     button {
       background-color: #ff4b2b;
       color: white;
@@ -61,19 +55,17 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     button:hover {
       background-color: #e84328;
     }
-
     .toggle-link {
       margin-top: 15px;
       color: #007bff;
       cursor: pointer;
       display: block;
       text-decoration: none;
+      font-weight: bold;
     }
-
     #message {
       margin-top: 10px;
     }
@@ -81,8 +73,8 @@
 </head>
 <body>
   <div class="auth-box">
-    <h2>Red Design</h2>
-    <p class="slogan">إنشاء حساب جديد</p>
+    <h2>إنشاء حساب</h2>
+    <p class="slogan">ابدأ رحلتك مع Red Design اليوم</p>
 
     <form id="signup-form">
       <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required />
@@ -90,7 +82,8 @@
       <button type="submit">إنشاء حساب</button>
     </form>
 
-    <a href="login.html" class="toggle-link">الرجوع إلى تسجيل الدخول</a>
+    <!-- زر الرجوع إلى صفحة تسجيل الدخول -->
+    <a href="login.html" class="toggle-link">الرجوع إلى صفحة تسجيل الدخول</a>
 
     <p id="message"></p>
   </div>
@@ -126,9 +119,9 @@
     });
 
     function showMessage(message, color) {
-      const msg = document.getElementById("message");
-      msg.textContent = message;
-      msg.style.color = color;
+      const msgEl = document.getElementById("message");
+      msgEl.textContent = message;
+      msgEl.style.color = color;
     }
   </script>
 </body>
