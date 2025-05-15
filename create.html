@@ -84,6 +84,7 @@
     <h2>Red Design</h2>
     <p class="slogan">Innovation through technology, excellence through execution.</p>
     <form id="signup-form">
+      <input type="text" id="signup-username" placeholder="اسم المستخدم" required />
       <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required />
       <input type="password" id="signup-password" placeholder="كلمة المرور" required />
       <button type="submit">إنشاء حساب</button>
@@ -96,7 +97,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBWhIw34rJC7-xtqRt5AOPsgjBd-m_fiy0",
@@ -111,20 +112,20 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    document.getElementById("signup-form").addEventListener("submit", (e) => {
+    document.getElementById("signup-form").addEventListener("submit", async (e) => {
       e.preventDefault();
+      const username = document.getElementById("signup-username").value;
       const email = document.getElementById("signup-email").value;
       const password = document.getElementById("signup-password").value;
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          showMessage("تم إنشاء حساب جديد بنجاح", "green");
-          // يمكنك إعادة التوجيه مثلاً بعد ثواني
-          // setTimeout(() => location.href = 'index.html', 3000);
-        })
-        .catch((error) => {
-          showMessage(error.message, "red");
-        });
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // تحديث اسم المستخدم في ملف المستخدم
+        await updateProfile(userCredential.user, { displayName: username });
+        showMessage("تم إنشاء حساب جديد بنجاح", "green");
+      } catch (error) {
+        showMessage(error.message, "red");
+      }
     });
 
     function showMessage(message, color) {
