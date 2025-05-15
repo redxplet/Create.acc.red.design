@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account - Red Design</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تسجيل الدخول - Red Design</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -66,34 +66,33 @@
       background-color: #e84328;
     }
 
-    #message {
-      margin-top: 10px;
+    .toggle-link {
+      margin-top: 15px;
+      color: #007bff;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
     }
 
-    .back-link {
-      display: block;
-      margin-top: 20px;
-      text-align: center;
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
+    #message {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div class="auth-box">
     <h2>Red Design</h2>
-    <p class="slogan">Create Account</p>
+    <p class="slogan">Innovation through technology, excellence through execution.</p>
 
-    <form id="signup-form">
-      <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required />
-      <input type="password" id="signup-password" placeholder="كلمة المرور" required />
-      <button type="submit">إنشاء حساب</button>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="البريد الإلكتروني" required />
+      <input type="password" id="login-password" placeholder="كلمة المرور" required />
+      <button type="submit">تسجيل الدخول</button>
     </form>
 
-    <p id="message"></p>
+    <a href="create.html" class="toggle-link">إنشاء حساب جديد</a>
 
-    <a href="https://redxplet.github.io/Red.design/" class="back-link">العودة إلى تسجيل الدخول</a>
+    <p id="message"></p>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
@@ -112,14 +111,14 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    document.getElementById("signup-form").addEventListener("submit", function(e) {
+    document.getElementById("login-form").addEventListener("submit", function(e) {
       e.preventDefault();
-      const email = document.getElementById("signup-email").value;
-      const password = document.getElementById("signup-password").value;
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
 
-      auth.createUserWithEmailAndPassword(email, password)
+      auth.signInWithEmailAndPassword(email, password)
         .then(() => {
-          showMessage("تم إنشاء الحساب بنجاح", "green");
+          showMessage("تم تسجيل الدخول بنجاح", "green");
         })
         .catch(error => {
           showMessage(error.message, "red");
@@ -127,10 +126,10 @@
     });
 
     function showMessage(message, color) {
-      const msgEl = document.getElementById("message");
-      msgEl.textContent = message;
-      msgEl.style.color = color;
+      const msg = document.getElementById("message");
+      msg.textContent = message;
+      msg.style.color = color;
     }
   </script>
 </body>
-</html>
+</html></html>
