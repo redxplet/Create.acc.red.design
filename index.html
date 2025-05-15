@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>تسجيل الدخول - Red Design</title>
   <style>
     body {
@@ -13,6 +13,8 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      direction: rtl;
+      text-align: center;
     }
 
     .auth-box {
@@ -22,18 +24,11 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 400px;
-      text-align: center;
     }
 
     h2 {
       color: #ff4b2b;
       margin-bottom: 10px;
-    }
-
-    .slogan {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 25px;
     }
 
     input {
@@ -67,30 +62,28 @@
     }
 
     .toggle-link {
-      margin-top: 15px;
+      margin-top: 10px;
       color: #007bff;
       cursor: pointer;
       display: block;
-      text-decoration: none;
     }
 
     #message {
       margin-top: 10px;
+      min-height: 20px;
     }
   </style>
 </head>
 <body>
   <div class="auth-box">
     <h2>Red Design</h2>
-    <p class="slogan">Innovation through technology, excellence through execution.</p>
-
     <form id="login-form">
       <input type="email" id="login-email" placeholder="البريد الإلكتروني" required />
       <input type="password" id="login-password" placeholder="كلمة المرور" required />
       <button type="submit">تسجيل الدخول</button>
     </form>
 
-    <a href="create.html" class="toggle-link">إنشاء حساب جديد</a>
+    <span id="toggle-to-signup" class="toggle-link">ليس لديك حساب؟ إنشاء حساب</span>
 
     <p id="message"></p>
   </div>
@@ -111,25 +104,34 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    document.getElementById("login-form").addEventListener("submit", function(e) {
+    const loginForm = document.getElementById("login-form");
+    const messageEl = document.getElementById("message");
+    const toggleToSignup = document.getElementById("toggle-to-signup");
+
+    loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const email = document.getElementById("login-email").value;
       const password = document.getElementById("login-password").value;
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
-          showMessage("تم تسجيل الدخول بنجاح", "green");
+          messageEl.textContent = "تم تسجيل الدخول بنجاح، جارٍ التحويل...";
+          messageEl.style.color = "green";
+
+          // تحويل إلى صفحة home.html بعد ثانيتين
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 1500);
         })
-        .catch(error => {
-          showMessage(error.message, "red");
+        .catch((error) => {
+          messageEl.textContent = error.message;
+          messageEl.style.color = "red";
         });
     });
 
-    function showMessage(message, color) {
-      const msg = document.getElementById("message");
-      msg.textContent = message;
-      msg.style.color = color;
-    }
+    toggleToSignup.addEventListener("click", () => {
+      window.location.href = "signup.html"; // تأكد أن اسم ملف صفحة التسجيل هو signup.html
+    });
   </script>
 </body>
-</html></html>
+</html>
