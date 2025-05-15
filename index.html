@@ -10,27 +10,28 @@
       background: linear-gradient(to right, #ff4b2b, #ff416c);
       margin: 0;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
-      direction: rtl;
-      text-align: center;
     }
-
     .auth-box {
-      background: #fff;
+      background: white;
       padding: 40px 30px;
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 400px;
+      text-align: center;
     }
-
     h2 {
       color: #ff4b2b;
       margin-bottom: 10px;
     }
-
+    .slogan {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 25px;
+    }
     input {
       width: 100%;
       padding: 12px;
@@ -39,12 +40,10 @@
       border-radius: 8px;
       transition: border-color 0.3s;
     }
-
     input:focus {
       border-color: #ff4b2b;
       outline: none;
     }
-
     button {
       background-color: #ff4b2b;
       color: white;
@@ -56,18 +55,15 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     button:hover {
       background-color: #e84328;
     }
-
     .toggle-link {
       margin-top: 10px;
       color: #007bff;
       cursor: pointer;
       display: block;
     }
-
     #message {
       margin-top: 10px;
       min-height: 20px;
@@ -77,14 +73,13 @@
 <body>
   <div class="auth-box">
     <h2>Red Design</h2>
+    <p class="slogan">Innovation through technology, excellence through execution.</p>
     <form id="login-form">
       <input type="email" id="login-email" placeholder="البريد الإلكتروني" required />
       <input type="password" id="login-password" placeholder="كلمة المرور" required />
       <button type="submit">تسجيل الدخول</button>
     </form>
-
-    <span id="toggle-to-signup" class="toggle-link">ليس لديك حساب؟ إنشاء حساب</span>
-
+    <span id="goto-create" class="toggle-link">لا تملك حساباً؟ إنشاء حساب</span>
     <p id="message"></p>
   </div>
 
@@ -101,36 +96,35 @@
       measurementId: "G-QHH3W1F58F"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    const loginForm = document.getElementById("login-form");
-    const messageEl = document.getElementById("message");
-    const toggleToSignup = document.getElementById("toggle-to-signup");
+    const loginForm = document.getElementById('login-form');
+    const messageEl = document.getElementById('message');
+    const gotoCreate = document.getElementById('goto-create');
 
-    loginForm.addEventListener("submit", (e) => {
+    gotoCreate.addEventListener('click', () => {
+      window.location.href = 'create.html';  // ينقلك لصفحة إنشاء الحساب المسماة create.html
+    });
+
+    loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
-          messageEl.textContent = "تم تسجيل الدخول بنجاح، جارٍ التحويل...";
-          messageEl.style.color = "green";
-
-          // تحويل إلى صفحة home.html بعد ثانيتين
+          messageEl.style.color = 'green';
+          messageEl.textContent = 'تم تسجيل الدخول بنجاح، جاري التحويل...';
           setTimeout(() => {
-            window.location.href = "home.html";
+            window.location.href = 'home.html'; // صفحة الواجهة الرئيسية
           }, 1500);
         })
-        .catch((error) => {
+        .catch(error => {
+          messageEl.style.color = 'red';
           messageEl.textContent = error.message;
-          messageEl.style.color = "red";
         });
-    });
-
-    toggleToSignup.addEventListener("click", () => {
-      window.location.href = "signup.html"; // تأكد أن اسم ملف صفحة التسجيل هو signup.html
     });
   </script>
 </body>
