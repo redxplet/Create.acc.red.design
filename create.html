@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>إنشاء حساب - Red Design</title>
   <style>
     body {
@@ -75,6 +75,7 @@
 
     #message {
       margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -88,14 +89,15 @@
       <button type="submit">إنشاء حساب</button>
     </form>
 
-    <span id="toggle-to-login" class="toggle-link">هل لديك حساب؟ تسجيل الدخول</span>
+    <span id="toggle-to-login" class="toggle-link" onclick="location.href='index.html'">هل لديك حساب؟ تسجيل الدخول</span>
 
     <p id="message"></p>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyBWhIw34rJC7-xtqRt5AOPsgjBd-m_fiy0",
       authDomain: "red-test-5f648.firebaseapp.com",
@@ -106,19 +108,21 @@
       measurementId: "G-QHH3W1F58F"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    document.getElementById("signup-form").addEventListener("submit", function(e) {
+    document.getElementById("signup-form").addEventListener("submit", (e) => {
       e.preventDefault();
       const email = document.getElementById("signup-email").value;
       const password = document.getElementById("signup-password").value;
 
-      auth.createUserWithEmailAndPassword(email, password)
+      createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          showMessage("تم إنشاء الحساب بنجاح", "green");
+          showMessage("تم إنشاء حساب جديد بنجاح", "green");
+          // يمكنك إعادة التوجيه مثلاً بعد ثواني
+          // setTimeout(() => location.href = 'index.html', 3000);
         })
-        .catch(error => {
+        .catch((error) => {
           showMessage(error.message, "red");
         });
     });
@@ -127,3 +131,7 @@
       const msgEl = document.getElementById("message");
       msgEl.textContent = message;
       msgEl.style.color = color;
+    }
+  </script>
+</body>
+</html>
