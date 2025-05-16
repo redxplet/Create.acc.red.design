@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>إنشاء حساب - Red Design</title>
+  <title>تسجيل الدخول - Red Design</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -59,15 +59,11 @@
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.1s;
+      transition: background-color 0.3s;
     }
 
     button:hover {
       background-color: #e84328;
-    }
-
-    button:active {
-      transform: scale(0.98);
     }
 
     .toggle-link {
@@ -86,22 +82,21 @@
 <body>
   <div class="auth-box">
     <h2>Red Design</h2>
-    <p class="slogan">Innovation through technology, excellence through execution.</p>
-    <form id="signup-form">
-      <input type="text" id="signup-username" placeholder="اسم المستخدم" required />
-      <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required />
-      <input type="password" id="signup-password" placeholder="كلمة المرور" required />
-      <button type="submit">إنشاء حساب</button>
+    <p class="slogan">أهلاً بعودتك، سجل دخولك وابدأ العمل!</p>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="البريد الإلكتروني" required />
+      <input type="password" id="login-password" placeholder="كلمة المرور" required />
+      <button type="submit">تسجيل الدخول</button>
     </form>
 
-    <span id="toggle-to-login" class="toggle-link" onclick="location.href='index.html'">هل لديك حساب؟ تسجيل الدخول</span>
+    <span class="toggle-link" onclick="location.href='signup.html'">ليس لديك حساب؟ إنشاء حساب</span>
 
     <p id="message"></p>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBWhIw34rJC7-xtqRt5AOPsgjBd-m_fiy0",
@@ -116,32 +111,19 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    document.getElementById("signup-form").addEventListener("submit", async (e) => {
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const username = document.getElementById("signup-username").value.trim();
-      const email = document.getElementById("signup-email").value.trim();
-      const password = document.getElementById("signup-password").value;
-
-      // التحقق من قوة كلمة المرور
-      if (password.length < 6) {
-        showMessage("كلمة المرور يجب أن تتكون من 6 أحرف على الأقل", "red");
-        return;
-      }
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
 
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCredential.user, { displayName: username });
-
-        showMessage("تم إنشاء حساب جديد بنجاح", "green");
-        document.getElementById("signup-form").reset();
-
-        // الانتقال إلى الصفحة الرئيسية بعد نجاح التسجيل
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        showMessage("تم تسجيل الدخول بنجاح", "green");
         setTimeout(() => {
-          window.location.href = "index.html";
-        }, 2000);
-
+          location.href = "home.html"; // عدل الصفحة الوجهة بعد تسجيل الدخول
+        }, 1000);
       } catch (error) {
-        showMessage(error.message, "red");
+        showMessage("خطأ: " + translateError(error.code), "red");
       }
     });
 
@@ -149,11 +131,21 @@
       const msgEl = document.getElementById("message");
       msgEl.textContent = message;
       msgEl.style.color = color;
+    }
 
-      // إخفاء الرسالة بعد 5 ثواني
-      setTimeout(() => {
-        msgEl.textContent = "";
-      }, 5000);
+    function translateError(code) {
+      switch (code) {
+        case "auth/invalid-email":
+          return "البريد الإلكتروني غير صالح.";
+        case "auth/user-disabled":
+          return "تم تعطيل هذا المستخدم.";
+        case "auth/user-not-found":
+          return "المستخدم غير موجود.";
+        case "auth/wrong-password":
+          return "كلمة المرور غير صحيحة.";
+        default:
+          return "حدث خطأ غير متوقع.";
+      }
     }
   </script>
 </body>
