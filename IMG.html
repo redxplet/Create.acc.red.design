@@ -80,18 +80,44 @@
       grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
       gap: 15px;
     }
-    #gallery img {
+    .image-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .image-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .image-card img {
       width: 100%;
       height: 140px;
       object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease;
+      border-radius: 15px 15px 0 0;
       cursor: pointer;
     }
-    #gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    .download-btn {
+      background: #ff416c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 80%;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .download-btn:hover {
+      background: #ff4b2b;
     }
     #message {
       margin-top: 20px;
@@ -124,12 +150,10 @@
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
 
-    // زر رجوع للصفحة السابقة
     backBtn.addEventListener('click', () => {
       history.back();
     });
 
-    // ترجمة تلقائية بسيطة (عربي -> إنجليزي)
     function translateToEnglish(text) {
       const dict = {
         "طبيعة": "nature",
@@ -156,12 +180,26 @@
         if(data.hits.length > 0) {
           message.textContent = `تم العثور على ${data.hits.length} صورة لـ "${query}"`;
           data.hits.forEach(hit => {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+
             const img = document.createElement('img');
             img.src = hit.webformatURL;
             img.alt = hit.tags;
             img.title = hit.tags;
             img.loading = 'lazy';
-            gallery.appendChild(img);
+
+            // زر التحميل
+            const downloadBtn = document.createElement('a');
+            downloadBtn.className = 'download-btn';
+            downloadBtn.href = hit.largeImageURL;
+            downloadBtn.download = '';
+            downloadBtn.textContent = 'تحميل';
+            downloadBtn.title = 'تحميل الصورة';
+
+            card.appendChild(img);
+            card.appendChild(downloadBtn);
+            gallery.appendChild(card);
           });
         } else {
           message.textContent = `لم يتم العثور على صور لـ "${query}"`;
@@ -172,7 +210,6 @@
       }
     }
 
-    // البحث عند إرسال الفورم
     searchForm.addEventListener('submit', e => {
       e.preventDefault();
       const query = searchInput.value.trim();
@@ -181,7 +218,7 @@
       }
     });
 
-    // بحث أولي عند تحميل الصفحة (اختياري)
+    // بحث افتراضي عند تحميل الصفحة
     searchImages('nature');
   </script>
 
