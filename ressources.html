@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عن Redxplet - Resources</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(0,0,0,0.2);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    /* زر الثلاث شرطات */
+    .hamburger {
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-left: 10px;
+    }
+
+    .hamburger div {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* تأثير تحويل زر الشرطات عند الفتح */
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* قائمة جانبية */
+    nav {
+      position: fixed;
+      top: 0;
+      left: -250px; /* مخفية عن الشاشة */
+      width: 250px;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      padding-top: 60px;
+      box-shadow: 3px 0 10px rgba(0,0,0,0.5);
+      transition: left 0.3s ease;
+      z-index: 1000;
+      direction: rtl;
+    }
+
+    nav.open {
+      left: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 15px 25px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ff416c;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    main p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    main p span {
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hamburger" id="hamburger-btn" aria-label="فتح القائمة">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <h1 style="margin:0; flex-grow:1; text-align:center;">Redxplet</h1>
+</header>
+
+<nav id="side-menu" aria-hidden="true">
+  <a href="htmlre.html">صفحة HTML</a>
+  <a href="IMG.html">صفحة الصور</a>
+  <a href="ved.html">صفحة الفيديو</a>
+</nav>
+
+<main>
+  <p>
+    تأسست شركة Redxplet بهدف الابتكار في مجال التكنولوجيا وتقديم أفضل الحلول الرقمية التي تساعد على تحقيق التميز والنجاح في عالم سريع التطور. نحن نؤمن بقوة العزيمة والعمل الجماعي كركيزة لتحقيق أهدافنا وتقديم قيمة حقيقية لعملائنا.
+  </p>
+  <p>
+    لبدء الاستخدام، اضغط على <span id="instruction">ثلاث شرطات على اليسار</span> لفتح قائمة الخيارات واستكشاف صفحاتنا المختلفة.
+  </p>
+</main>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const sideMenu = document.getElementById('side-menu');
+  const instruction = document.getElementById('instruction');
+
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('active');
+    sideMenu.classList.toggle('open');
+
+    // تحديث aria-hidden
+    const isOpen = sideMenu.classList.contains('open');
+    sideMenu.setAttribute('aria-hidden', !isOpen);
+
+    // تأثير عند الضغط على الجملة في الفقرة لفتح القائمة أيضاً
+    if (!isOpen) {
+      instruction.style.textDecoration = 'underline';
+      instruction.style.color = '#ffb347';
+    } else {
+      instruction.style.textDecoration = 'none';
+      instruction.style.color = 'white';
+    }
+  });
+
+  // اختياري: فتح القائمة عند الضغط على النص داخل الفقرة أيضاً
+  instruction.addEventListener('click', () => {
+    hamburgerBtn.classList.add('active');
+    sideMenu.classList.add('open');
+    sideMenu.setAttribute('aria-hidden', false);
+    instruction.style.textDecoration = 'underline';
+    instruction.style.color = '#ffb347';
+  });
+</script>
+
+</body>
+</html>
