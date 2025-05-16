@@ -6,61 +6,98 @@
   <title>خدمات Redxplet</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #ff4b2b, #ff416c);
-      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      color: #fff;
       margin: 0;
-      padding: 20px;
+      padding: 40px 20px;
       direction: rtl;
       text-align: center;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      box-sizing: border-box;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      font-weight: 600;
+      color: #ffded9;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
     }
     p {
-      font-size: 18px;
-      margin-bottom: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      line-height: 1.8;
+      color: #ffd9d3;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+    }
+    strong {
+      color: #fff;
+      font-weight: 900;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
     }
     button#explore-btn {
-      background-color: white;
+      background-color: #fff;
       color: #ff416c;
       border: none;
-      padding: 18px 40px;
-      font-size: 20px;
-      font-weight: bold;
+      padding: 18px 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
       border-radius: 50px;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s, transform 0.2s;
-      box-shadow: 0 0 15px 3px rgba(255, 65, 108, 0.7);
+      transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease;
+      box-shadow: 0 8px 20px rgba(255, 65, 108, 0.8);
       margin: 0 auto;
       display: block;
+      width: fit-content;
     }
     button#explore-btn:hover {
       background-color: #ff416c;
       color: white;
-      transform: scale(1.05);
-      box-shadow: 0 0 25px 8px rgba(255, 65, 108, 0.9);
+      transform: scale(1.1);
+      box-shadow: 0 12px 25px rgba(255, 65, 108, 1);
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      h2 {
+        font-size: 1.4rem;
+      }
+      p {
+        font-size: 1rem;
+        padding: 0 10px;
+      }
+      button#explore-btn {
+        padding: 14px 40px;
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
+  <h1>Redxplet</h1>
+  <h2>من نحن</h2>
   <p>
     شركة <strong>Redxplet</strong> هي شركة رائدة في مجال الابتكار التقني، نعمل على تطوير حلول مبتكرة تلبي احتياجات العصر الحديث. نسعى دائماً لتحقيق التميز والجودة في كل ما نقدمه لعملائنا.
-    للبدء في الاستخدام، اضغط على زر "استكشف خدماتنا" في الأعلى.
+    للبدء في الاستخدام، اضغط على زر "استكشف خدماتنا" بالأسفل.
   </p>
 
   <button id="explore-btn">استكشف خدماتنا</button>
 
   <script>
     document.getElementById('explore-btn').addEventListener('click', () => {
-      // عند الضغط على الزر، نوجه المستخدم إلى صفحة اختيار الخدمات
-      // سأجعلها تفتح صفحة تحتوي على الروابط الثلاثة (htmlre.html, IMG.html, ved.html)
-      window.location.href = 'services.html';
+      window.location.href = 'resources.html';
     });
   </script>
 </body>
