@@ -1,224 +1,188 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>معرض الصور - Redxplet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>بحث الصور - Redxplet</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f5f5;
       margin: 0;
-      padding: 0;
-      direction: rtl;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
     }
     header {
-      background: linear-gradient(to right, #ff4b2b, #ff416c);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .search-container {
+      width: 100%;
+      max-width: 900px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      margin: 20px;
-      gap: 10px;
+      margin-bottom: 20px;
+      color: white;
     }
-    input[type="text"], select {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
+    header h1 {
+      margin: 0;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+    button#back-btn {
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button#back-btn:hover {
+      background: white;
+      color: #ff416c;
+    }
+    form {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      margin-bottom: 20px;
     }
     input[type="text"] {
-      width: 40%;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #ff416c;
-      color: white;
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 30px 0 0 30px;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
+      font-size: 16px;
+      outline: none;
+    }
+    button#search-btn {
+      background: #ff4b2b;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 0 30px 30px 0;
+      color: white;
       font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #e6375c;
+    button#search-btn:hover {
+      background: #e84328;
     }
-    .gallery {
+    #gallery {
+      width: 100%;
+      max-width: 900px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
       gap: 15px;
-      padding: 20px;
     }
-    .image-container {
-      position: relative;
-    }
-    .gallery img {
+    #gallery img {
       width: 100%;
-      border-radius: 10px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
       cursor: pointer;
     }
-    .back-button {
-      margin: 20px;
-      text-align: center;
+    #gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      padding-top: 60px;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.8);
-    }
-    .modal-content {
-      margin: auto;
-      display: block;
-      max-width: 90%;
-      max-height: 80%;
-    }
-    .modal-content, #download-btn {
-      animation: zoom 0.3s;
-    }
-    @keyframes zoom {
-      from {transform:scale(0)} 
-      to {transform:scale(1)}
-    }
-    .modal-controls {
-      text-align: center;
-      margin-top: 10px;
-    }
-    #download-btn {
-      padding: 10px 20px;
-      background-color: #28a745;
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
       color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #download-btn:hover {
-      background-color: #218838;
-    }
-    .close {
-      position: absolute;
-      top: 15px;
-      right: 35px;
-      color: #fff;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>معرض الصور - Redxplet</h1>
+    <h1>بحث الصور - Redxplet</h1>
+    <button id="back-btn" title="العودة للصفحة السابقة">رجوع</button>
   </header>
 
-  <div class="search-container">
-    <input type="text" id="searchQuery" placeholder="ابحث عن صور...">
-    <select id="categorySelect">
-      <option value="">كل الفئات</option>
-      <option value="backgrounds">خلفيات</option>
-      <option value="people">أشخاص</option>
-      <option value="food">طعام</option>
-      <option value="nature">طبيعة</option>
-      <option value="computer">تكنولوجيا</option>
-      <option value="travel">سفر</option>
-      <option value="animals">حيوانات</option>
-    </select>
-    <button onclick="searchImages()">بحث</button>
-  </div>
+  <form id="search-form" autocomplete="off">
+    <input type="text" id="search-input" placeholder="ابحث عن صور..." required />
+    <button type="submit" id="search-btn">بحث</button>
+  </form>
 
-  <div class="gallery" id="gallery">
-    <!-- الصور تُعرض هنا -->
-  </div>
-
-  <div class="back-button">
-    <button onclick="goBack()">الرجوع</button>
-  </div>
-
-  <!-- Modal -->
-  <div id="imageModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="modalImg">
-    <div class="modal-controls">
-      <a id="download-btn" href="#" target="_blank">تحميل الصورة</a>
-    </div>
-  </div>
+  <div id="gallery"></div>
+  <p id="message"></p>
 
   <script>
-    const apiKey = "50333455-5a742d073594ba638874ed7e7";
+    const apiKey = '50333455-5a742d073594ba638874ed7e7';
+    const gallery = document.getElementById('gallery');
+    const message = document.getElementById('message');
+    const backBtn = document.getElementById('back-btn');
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
 
-    async function fetchImages(query = "nature", category = "") {
-      const gallery = document.getElementById("gallery");
-      gallery.innerHTML = "";
+    // زر رجوع للصفحة السابقة
+    backBtn.addEventListener('click', () => {
+      history.back();
+    });
 
+    // ترجمة تلقائية بسيطة (عربي -> إنجليزي)
+    function translateToEnglish(text) {
+      const dict = {
+        "طبيعة": "nature",
+        "شمس": "sun",
+        "بحر": "sea",
+        "مدينة": "city",
+        "سماء": "sky",
+        "زهور": "flowers",
+        "جبال": "mountains",
+        "حيوانات": "animals",
+        "سيارات": "cars",
+        "ناس": "people"
+      };
+      return dict[text.toLowerCase()] || text;
+    }
+
+    async function searchImages(query) {
+      const translatedQuery = translateToEnglish(query);
+      message.textContent = 'جاري البحث...';
+      gallery.innerHTML = '';
       try {
-        const response = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=50&category=${category}`);
+        const response = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(translatedQuery)}&image_type=photo&per_page=40&safesearch=true`);
         const data = await response.json();
-
-        if (data.hits.length === 0) {
-          gallery.innerHTML = "<p>لم يتم العثور على صور بهذه الكلمة أو الفئة.</p>";
-        } else {
-          data.hits.forEach(img => {
-            const container = document.createElement("div");
-            container.classList.add("image-container");
-
-            const image = document.createElement("img");
-            image.src = img.webformatURL;
-            image.alt = img.tags;
-            image.onclick = () => showModal(img.largeImageURL);
-
-            container.appendChild(image);
-            gallery.appendChild(container);
+        if(data.hits.length > 0) {
+          message.textContent = `تم العثور على ${data.hits.length} صورة لـ "${query}"`;
+          data.hits.forEach(hit => {
+            const img = document.createElement('img');
+            img.src = hit.webformatURL;
+            img.alt = hit.tags;
+            img.title = hit.tags;
+            img.loading = 'lazy';
+            gallery.appendChild(img);
           });
+        } else {
+          message.textContent = `لم يتم العثور على صور لـ "${query}"`;
         }
-      } catch (error) {
-        gallery.innerHTML = "<p>حدث خطأ أثناء تحميل الصور. يرجى المحاولة لاحقاً.</p>";
+      } catch(error) {
+        message.textContent = 'حدث خطأ أثناء تحميل الصور. حاول مرة أخرى لاحقاً.';
+        console.error(error);
       }
     }
 
-    function searchImages() {
-      const query = document.getElementById("searchQuery").value.trim() || "nature";
-      const category = document.getElementById("categorySelect").value;
-      fetchImages(query, category);
-    }
+    // البحث عند إرسال الفورم
+    searchForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const query = searchInput.value.trim();
+      if(query) {
+        searchImages(query);
+      }
+    });
 
-    function goBack() {
-      window.history.back();
-    }
-
-    function showModal(imageUrl) {
-      const modal = document.getElementById("imageModal");
-      const modalImg = document.getElementById("modalImg");
-      const downloadBtn = document.getElementById("download-btn");
-
-      modal.style.display = "block";
-      modalImg.src = imageUrl;
-      downloadBtn.href = imageUrl;
-    }
-
-    function closeModal() {
-      document.getElementById("imageModal").style.display = "none";
-    }
-
-    window.onload = () => {
-      fetchImages(); // افتراضي: صور طبيعة
-    };
+    // بحث أولي عند تحميل الصفحة (اختياري)
+    searchImages('nature');
   </script>
 
 </body>
