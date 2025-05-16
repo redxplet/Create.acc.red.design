@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>مجتمع Redxplet</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
+      color: white;
+      margin: 0;
+      padding: 20px;
+      direction: rtl;
+    }
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .post-form, .post {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 10px;
+    }
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: white;
+      color: #ff416c;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #ff416c;
+      color: white;
+    }
+    .post img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .reply-section {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .reply {
+      background: rgba(255,255,255,0.2);
+      padding: 5px 10px;
+      border-radius: 10px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>مجتمع Redxplet</h1>
+
+  <div class="post-form">
+    <label>اسم المستخدم:</label>
+    <input type="text" id="username" placeholder="اسمك" />
+
+    <label>نص المنشور:</label>
+    <textarea id="postText" rows="4" placeholder="بم تفكر؟"></textarea>
+
+    <label>إضافة صورة (اختياري):</label>
+    <input type="file" id="imageUpload" accept="image/*" />
+
+    <button onclick="addPost()">نشر</button>
+  </div>
+
+  <div id="posts"></div>
+
+  <script>
+    let posts = [];
+
+    function addPost() {
+      const username = document.getElementById('username').value.trim();
+      const text = document.getElementById('postText').value.trim();
+      const imageInput = document.getElementById('imageUpload');
+      const reader = new FileReader();
+
+      if (!username || !text) {
+        alert("الرجاء ملء الاسم والنص");
+        return;
+      }
+
+      const post = { username, text, image: "", replies: [] };
+
+      if (imageInput.files[0]) {
+        reader.onload = function(e) {
+          post.image = e.target.result;
+          posts.unshift(post);
+          renderPosts();
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        posts.unshift(post);
+        renderPosts();
+      }
+
+      document.getElementById('username').value = "";
+      document.getElementById('postText').value = "";
+      document.getElementById('imageUpload').value = "";
+    }
+
+    function renderPosts() {
+      const container = document.getElementById('posts');
+      container.innerHTML = "";
+
+      posts.forEach((post, index) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = "post";
+        postDiv.innerHTML = `
+          <strong>${post.username}</strong>
+          <p>${post.text}</p>
+          ${post.image ? `<img src="${post.image}" alt="post image" />` : ''}
+          <div class="reply-section">
+            <input type="text" placeholder="أضف ردك" onkeydown="if(event.key==='Enter'){addReply(${index}, this)}" />
+            <div>${post.replies.map(r => `<div class="reply">${r}</div>`).join('')}</div>
+          </div>
+        `;
+        container.appendChild(postDiv);
+      });
+    }
+
+    function addReply(index, input) {
+      const reply = input.value.trim();
+      if (reply) {
+        posts[index].replies.push(reply);
+        input.value = "";
+        renderPosts();
+      }
+    }
+  </script>
+
+</body>
+</html>
