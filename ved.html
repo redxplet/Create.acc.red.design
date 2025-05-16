@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>فيديوهات غرين سكرين - Redxplet</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
+      color: white;
+      margin: 0;
+      padding: 20px;
+      direction: rtl;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    #search-form {
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      display: flex;
+    }
+    #search-input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px 0 0 8px;
+      border: none;
+      font-size: 16px;
+    }
+    #search-button {
+      background-color: #fff;
+      color: #ff416c;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0 8px 8px 0;
+      transition: background-color 0.3s;
+    }
+    #search-button:hover {
+      background-color: #ff416c;
+      color: white;
+    }
+    #videos-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .video-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 1px solid #ddd;
+    }
+    .video-info {
+      padding: 10px;
+    }
+    .video-title {
+      font-weight: bold;
+      font-size: 16px;
+      margin: 0 0 8px 0;
+      color: #ff416c;
+    }
+    #back-btn {
+      display: block;
+      margin: 30px auto 10px auto;
+      background-color: white;
+      color: #ff416c;
+      border: none;
+      padding: 10px 30px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      max-width: 150px;
+      transition: background-color 0.3s;
+    }
+    #back-btn:hover {
+      background-color: #ff416c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>فيديوهات غرين سكرين - Redxplet</h1>
+
+  <form id="search-form">
+    <input type="text" id="search-input" placeholder="ابحث عن فيديو..." required />
+    <button type="submit" id="search-button">بحث</button>
+  </form>
+
+  <div id="videos-container">
+    <!-- الفيديوهات ستظهر هنا -->
+  </div>
+
+  <button id="back-btn" onclick="window.location.href='resources.html'">الرجوع إلى الخدمات</button>
+
+  <script>
+    const videosContainer = document.getElementById('videos-container');
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+
+    // وظيفة لتحميل فيديوهات افتراضية أو بحثية من Mixkit API (غير رسمي، لذلك سنستخدم مثال ثابت)
+    // Mixkit لا توفر API رسمي للفيديوهات، لذا سنستخدم فيديوهات ثابتة للعرض مع بحث نصي داخلي فقط.
+
+    const videosData = [
+      {
+        title: "Green Screen Explosion",
+        src: "https://assets.mixkit.co/videos/preview/mixkit-green-explosion-137.mp4"
+      },
+      {
+        title: "Green Screen Fireworks",
+        src: "https://assets.mixkit.co/videos/preview/mixkit-fireworks-on-green-screen-3874.mp4"
+      },
+      {
+        title: "Green Screen Smoke",
+        src: "https://assets.mixkit.co/videos/preview/mixkit-green-smoke-1753.mp4"
+      },
+      {
+        title: "Green Screen Abstract",
+        src: "https://assets.mixkit.co/videos/preview/mixkit-abstract-green-motion-1971.mp4"
+      },
+      {
+        title: "Green Screen Confetti",
+        src: "https://assets.mixkit.co/videos/preview/mixkit-confetti-on-green-screen-1981.mp4"
+      }
+    ];
+
+    function displayVideos(videos) {
+      videosContainer.innerHTML = '';
+      if (videos.length === 0) {
+        videosContainer.innerHTML = '<p style="color:white; text-align:center;">لا توجد فيديوهات مطابقة للبحث.</p>';
+        return;
+      }
+      videos.forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        videoCard.innerHTML = `
+          <video src="${video.src}" controls></video>
+          <div class="video-info">
+            <p class="video-title">${video.title}</p>
+          </div>
+        `;
+        videosContainer.appendChild(videoCard);
+      });
+    }
+
+    // عرض كل الفيديوهات عند تحميل الصفحة
+    displayVideos(videosData);
+
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      const filteredVideos = videosData.filter(v => v.title.toLowerCase().includes(query));
+      displayVideos(filteredVideos);
+    });
+  </script>
+</body>
+  </html>
