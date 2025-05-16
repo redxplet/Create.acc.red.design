@@ -3,167 +3,163 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>الصفحة الرئيسية - Redxplet</title>
+  <title>الواجهة الرئيسية - Redxplet</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
       margin: 0;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background: #f7f7f7;
-      direction: rtl;
-      text-align: center;
+      color: white;
+      overflow-x: hidden;
     }
     header {
-      background-color: #ff4b2b;
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.2);
+    }
+    header a {
       color: white;
-      padding: 15px 20px;
-      font-size: 20px;
+      text-decoration: none;
       font-weight: bold;
+      font-size: 16px;
+      padding: 8px 15px;
+      border: 2px solid white;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    header a:hover {
+      background-color: white;
+      color: #ff416c;
       cursor: pointer;
-      user-select: none;
     }
     main {
       flex: 1;
-      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
     }
-    .username {
-      margin-bottom: 25px;
-      font-size: 24px;
+    .inspiration {
+      font-size: 28px;
       font-weight: bold;
-      color: #333;
+      height: 50px;
+      margin-bottom: 50px;
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      direction: rtl; /* من اليمين لليسار */
+      color: white;
     }
-    .edit-name {
-      color: #ff4b2b;
-      cursor: pointer;
-      text-decoration: underline;
-      font-size: 14px;
+    .inspiration span {
+      display: inline-block;
+      animation: slideColorChange 6s infinite;
     }
-    .inspirational-words {
+    @keyframes slideColorChange {
+      0%   { transform: translateX(100%); color: #ff4b2b; }
+      25%  { color: #ffb347; }
+      50%  { transform: translateX(-100%); color: #ff416c; }
+      75%  { color: #ff8552; }
+      100% { transform: translateX(100%); color: #ff4b2b; }
+    }
+    button#get-started {
+      background-color: white;
+      color: #ff416c;
+      border: none;
+      font-weight: bold;
       font-size: 18px;
-      color: #555;
-      max-width: 600px;
-      margin: 0 auto 50px auto;
-      line-height: 1.6;
+      padding: 15px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 0 0 #ff416c;
+      animation: pulse-border 2s infinite;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    button#get-started:hover {
+      background-color: #ff416c;
+      color: white;
+      box-shadow: 0 0 15px 5px #ff416c;
+    }
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0 0 #ff416c; }
+      70% { box-shadow: 0 0 15px 10px #ff416c; }
+      100% { box-shadow: 0 0 0 0 #ff416c; }
     }
     footer {
-      background-color: #333;
-      color: white;
-      padding: 15px 0;
-      font-weight: bold;
-    }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0; top: 0; width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px 30px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
+      background: rgba(0,0,0,0.2);
       text-align: center;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin: 15px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .modal-content button {
-      background-color: #ff4b2b;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
+      padding: 12px 0;
       font-weight: bold;
-      width: 100%;
-      transition: background-color 0.3s;
-    }
-    .modal-content button:hover {
-      background-color: #e84328;
+      font-size: 16px;
+      color: white;
     }
   </style>
 </head>
 <body>
 
-  <header id="profile-header">الملف الشخصي</header>
+  <header>
+    <a href="profile.html">الملف الشخصي</a>
+  </header>
 
   <main>
-    <div class="username" id="username-display">مرحباً، مستخدم جديد!</div>
-    <div class="edit-name" id="edit-name-btn">تغيير الاسم</div>
-
-    <div class="inspirational-words">
-      كل يوم هو فرصة جديدة لتحقيق أحلامك، لا تتوقف عن الإيمان بنفسك وبقدرتك على التغيير. <br />
-      النجاح يبدأ بخطوة، فلتكن هذه الخطوة اليوم. <br />
-      الإبداع لا حدود له، فاستمر في التعلم والتطوير. <br />
-      التفاؤل هو سر القوة في مواجهة التحديات. <br />
-      لا تخف من الفشل، فهو درس ثمين نحو النجاح.
+    <div class="inspiration" id="inspiration-text">
+      <!-- الكلمات المتغيرة ستظهر هنا -->
     </div>
+
+    <button id="get-started">Get Started</button>
   </main>
 
-  <footer>Redxplet</footer>
-
-  <!-- Modal to change username -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h3>تغيير الاسم</h3>
-      <input type="text" id="new-username" placeholder="أدخل اسمك الجديد" />
-      <button id="save-name-btn">حفظ</button>
-    </div>
-  </div>
+  <footer>
+    Redxplet
+  </footer>
 
   <script>
-    const usernameDisplay = document.getElementById('username-display');
-    const editNameBtn = document.getElementById('edit-name-btn');
-    const modal = document.getElementById('modal');
-    const newUsernameInput = document.getElementById('new-username');
-    const saveNameBtn = document.getElementById('save-name-btn');
+    // كلمات الإلهام التي ستتغير
+    const words = [
+      "إلهام",
+      "إبداع",
+      "تطوير",
+      "ابتكار",
+      "نجاح",
+      "تفاؤل",
+      "طموح",
+      "تميز",
+      "تعلم",
+      "إنجاز"
+    ];
 
-    // Load saved username from localStorage or default
-    let currentUsername = localStorage.getItem('username') || 'مستخدم جديد';
-    usernameDisplay.textContent = `مرحباً، ${currentUsername}!`;
+    const inspirationEl = document.getElementById('inspiration-text');
 
-    // Show modal on clicking "تغيير الاسم"
-    editNameBtn.addEventListener('click', () => {
-      newUsernameInput.value = currentUsername;
-      modal.style.display = 'flex';
-      newUsernameInput.focus();
-    });
+    let index = 0;
+    function showWord() {
+      inspirationEl.textContent = words[index];
+      inspirationEl.style.color = randomColor();
+      index = (index + 1) % words.length;
+    }
 
-    // Save new username
-    saveNameBtn.addEventListener('click', () => {
-      const newName = newUsernameInput.value.trim();
-      if (newName) {
-        currentUsername = newName;
-        localStorage.setItem('username', currentUsername);
-        usernameDisplay.textContent = `مرحباً، ${currentUsername}!`;
-        modal.style.display = 'none';
-      } else {
-        alert('الرجاء إدخال اسم صالح');
-      }
-    });
+    function randomColor() {
+      // ألوان تتماشى مع التصميم
+      const colors = ['#ff4b2b', '#ff416c', '#ff8552', '#ffb347', '#ff6f91'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
 
-    // Close modal if clicked outside modal-content
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
+    showWord();
+    setInterval(showWord, 3000); // كل 3 ثواني تتغير الكلمة
 
-    // Optional: عند الضغط على عنوان الملف الشخصي يمكن أيضاً فتح تعديل الاسم
-    document.getElementById('profile-header').addEventListener('click', () => {
-      editNameBtn.click();
+    // تأثير انتقال عند الضغط على الزر
+    document.getElementById('get-started').addEventListener('click', () => {
+      document.body.style.transition = 'opacity 0.5s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => {
+        window.location.href = 'resources.html';
+      }, 500);
     });
   </script>
+  
 </body>
-  </html>
+</html>
