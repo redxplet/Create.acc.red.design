@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الملف الشخصي - Redxplet</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ff4b2b, #ff416c);
+      color: white;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    header {
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background: rgba(0,0,0,0.2);
+      padding: 15px 20px;
+      border-radius: 12px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    header button {
+      background: #ff416c;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    header button:hover {
+      background: #e0355a;
+    }
+    .profile-image-container {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .profile-image {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      background: rgba(255,255,255,0.2);
+    }
+    input[type="file"] {
+      margin-top: 15px;
+      color: white;
+      cursor: pointer;
+    }
+    .username {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .support-button {
+      background-color: white;
+      color: #ff416c;
+      border: none;
+      font-weight: bold;
+      padding: 12px 28px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff416c;
+      transition: background-color 0.3s, color 0.3s;
+      margin-bottom: 50px;
+      width: 100%;
+      max-width: 300px;
+    }
+    .support-button:hover {
+      background-color: #ff416c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 id="username-display">اسم المستخدم</h1>
+    <button id="logout-btn">تسجيل الخروج</button>
+  </header>
+
+  <div class="profile-image-container">
+    <img src="https://via.placeholder.com/140?text=صورة+شخصية" alt="الصورة الشخصية" class="profile-image" id="profile-img" />
+    <br />
+    <input type="file" id="image-upload" accept="image/*" />
+  </div>
+
+  <button class="support-button" id="support-btn">طلب الدعم</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWhIw34rJC7-xtqRt5AOPsgjBd-m_fiy0",
+      authDomain: "red-test-5f648.firebaseapp.com",
+      projectId: "red-test-5f648",
+      storageBucket: "red-test-5f648.appspot.com",
+      messagingSenderId: "1088474536089",
+      appId: "1:1088474536089:web:da3aac7ec4645af3258008",
+      measurementId: "G-QHH3W1F58F"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // عرض اسم المستخدم بعد تسجيل الدخول
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById("username-display").textContent = user.displayName || user.email;
+      } else {
+        // إذا لم يكن هناك مستخدم مسجل دخول، عد لصفحة تسجيل الدخول
+        window.location.href = "index.html";
+      }
+    });
+
+    // زر تسجيل الخروج
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        window.location.href = "index.html";
+      });
+    });
+
+    // عرض الصورة المختارة فقط (preview) بدون رفع أو حفظ
+    const imageUpload = document.getElementById("image-upload");
+    const profileImg = document.getElementById("profile-img");
+
+    imageUpload.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          profileImg.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // زر طلب الدعم يفتح الرابط في نافذة جديدة
+    document.getElementById("support-btn").addEventListener("click", () => {
+      window.open("https://www.instagram.com/ta_ha_ta_ha_elml?igsh=MTl1dGJ4c2NmMG41Mw==", "_blank");
+    });
+
+  </script>
+
+</body>
+</html>
