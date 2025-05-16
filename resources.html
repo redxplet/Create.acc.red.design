@@ -3,167 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>عن Redxplet - Resources</title>
+  <title>موارد - Red Design</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      margin: 0;
       background: linear-gradient(to right, #ff4b2b, #ff416c);
       color: white;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    header {
-      background: rgba(0,0,0,0.2);
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    /* زر الثلاث شرطات */
-    .hamburger {
-      width: 30px;
-      height: 22px;
-      cursor: pointer;
-      position: relative;
+      margin: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      margin-left: 10px;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
     }
-
-    .hamburger div {
-      height: 4px;
-      background: white;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-
-    /* تأثير تحويل زر الشرطات عند الفتح */
-    .hamburger.active div:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    .hamburger.active div:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.active div:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* قائمة جانبية */
-    nav {
-      position: fixed;
-      top: 0;
-      left: -250px; /* مخفية عن الشاشة */
-      width: 250px;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      padding-top: 60px;
-      box-shadow: 3px 0 10px rgba(0,0,0,0.5);
-      transition: left 0.3s ease;
-      z-index: 1000;
+    main {
+      flex: 1;
+      max-width: 700px;
+      margin: auto;
+      text-align: right;
       direction: rtl;
     }
-
-    nav.open {
-      left: 0;
+    p.description {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 40px;
     }
-
-    nav a {
-      display: block;
-      padding: 15px 25px;
-      color: white;
-      text-decoration: none;
+    button#explore-btn {
+      background-color: white;
+      color: #ff416c;
+      border: none;
+      font-size: 22px;
       font-weight: bold;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding: 18px 30px;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 0 10px 3px rgba(255, 65, 108, 0.7);
+      transition: background-color 0.3s, color 0.3s;
+      display: block;
+      margin: 0 auto 40px auto;
+      width: fit-content;
+    }
+    button#explore-btn:hover {
+      background-color: #ff416c;
+      color: white;
+      box-shadow: 0 0 15px 6px #ff4b2b;
+    }
+    ul.menu {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 300px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+    }
+    ul.menu.show {
+      display: flex;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    ul.menu li {
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 15px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
       transition: background-color 0.3s;
     }
-
-    nav a:hover {
-      background-color: #ff416c;
-      cursor: pointer;
+    ul.menu li:hover {
+      background-color: rgba(255,255,255,0.4);
     }
-
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      text-align: right;
-      line-height: 1.6;
-    }
-
-    main p {
-      font-size: 20px;
-      margin-bottom: 30px;
-    }
-
-    main p span {
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: underline;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px);}
+      to { opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
+  <main>
+    <p class="description">
+      شركة Red Design هي رائدة في مجال الابتكار التقني وتطوير الحلول الرقمية المتقدمة. نسعى لتحقيق التميز من خلال الابتكار، والإبداع، والتفاني في تقديم أفضل الخدمات لعملائنا.
+      <br /><br />
+      لبدء الاستخدام، اضغط على زر "استكشف خدماتنا" أدناه واختر أحد الخيارات المتاحة.
+    </p>
+    <button id="explore-btn">استكشف خدماتنا</button>
+    <ul class="menu" id="services-menu">
+      <li onclick="location.href='htmlre.html'">صفحة HTML</li>
+      <li onclick="location.href='IMG.html'">صفحة الصور</li>
+      <li onclick="location.href='ved.html'">صفحة الفيديو</li>
+    </ul>
+  </main>
 
-<header>
-  <div class="hamburger" id="hamburger-btn" aria-label="فتح القائمة">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <h1 style="margin:0; flex-grow:1; text-align:center;">Redxplet</h1>
-</header>
+  <script>
+    const exploreBtn = document.getElementById('explore-btn');
+    const menu = document.getElementById('services-menu');
 
-<nav id="side-menu" aria-hidden="true">
-  <a href="htmlre.html">صفحة HTML</a>
-  <a href="IMG.html">صفحة الصور</a>
-  <a href="ved.html">صفحة الفيديو</a>
-</nav>
-
-<main>
-  <p>
-    تأسست شركة Redxplet بهدف الابتكار في مجال التكنولوجيا وتقديم أفضل الحلول الرقمية التي تساعد على تحقيق التميز والنجاح في عالم سريع التطور. نحن نؤمن بقوة العزيمة والعمل الجماعي كركيزة لتحقيق أهدافنا وتقديم قيمة حقيقية لعملائنا.
-  </p>
-  <p>
-    لبدء الاستخدام، اضغط على <span id="instruction">ثلاث شرطات على اليسار</span> لفتح قائمة الخيارات واستكشاف صفحاتنا المختلفة.
-  </p>
-</main>
-
-<script>
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const sideMenu = document.getElementById('side-menu');
-  const instruction = document.getElementById('instruction');
-
-  hamburgerBtn.addEventListener('click', () => {
-    hamburgerBtn.classList.toggle('active');
-    sideMenu.classList.toggle('open');
-
-    // تحديث aria-hidden
-    const isOpen = sideMenu.classList.contains('open');
-    sideMenu.setAttribute('aria-hidden', !isOpen);
-
-    // تأثير عند الضغط على الجملة في الفقرة لفتح القائمة أيضاً
-    if (!isOpen) {
-      instruction.style.textDecoration = 'underline';
-      instruction.style.color = '#ffb347';
-    } else {
-      instruction.style.textDecoration = 'none';
-      instruction.style.color = 'white';
-    }
-  });
-
-  // اختياري: فتح القائمة عند الضغط على النص داخل الفقرة أيضاً
-  instruction.addEventListener('click', () => {
-    hamburgerBtn.classList.add('active');
-    sideMenu.classList.add('open');
-    sideMenu.setAttribute('aria-hidden', false);
-    instruction.style.textDecoration = 'underline';
-    instruction.style.color = '#ffb347';
-  });
-</script>
-
+    exploreBtn.addEventListener('click', () => {
+      menu.classList.toggle('show');
+    });
+  </script>
 </body>
 </html>
