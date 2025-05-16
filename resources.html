@@ -3,104 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>موارد - Red Design</title>
+  <title>خدمات Redxplet</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to right, #ff4b2b, #ff416c);
       color: white;
       margin: 0;
+      padding: 20px;
+      direction: rtl;
+      text-align: center;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
+      justify-content: center;
     }
-    main {
-      flex: 1;
-      max-width: 700px;
-      margin: auto;
-      text-align: right;
-      direction: rtl;
-    }
-    p.description {
+    p {
       font-size: 18px;
-      line-height: 1.6;
       margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
     }
     button#explore-btn {
       background-color: white;
       color: #ff416c;
       border: none;
-      font-size: 22px;
+      padding: 18px 40px;
+      font-size: 20px;
       font-weight: bold;
-      padding: 18px 30px;
-      border-radius: 40px;
+      border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 0 10px 3px rgba(255, 65, 108, 0.7);
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      box-shadow: 0 0 15px 3px rgba(255, 65, 108, 0.7);
+      margin: 0 auto;
       display: block;
-      margin: 0 auto 40px auto;
-      width: fit-content;
     }
     button#explore-btn:hover {
       background-color: #ff416c;
       color: white;
-      box-shadow: 0 0 15px 6px #ff4b2b;
-    }
-    ul.menu {
-      list-style: none;
-      padding: 0;
-      margin: 0 auto;
-      max-width: 300px;
-      display: none;
-      flex-direction: column;
-      gap: 15px;
-    }
-    ul.menu.show {
-      display: flex;
-      animation: fadeIn 0.4s ease forwards;
-    }
-    ul.menu li {
-      background: rgba(255,255,255,0.2);
-      border-radius: 12px;
-      padding: 15px 20px;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-      transition: background-color 0.3s;
-    }
-    ul.menu li:hover {
-      background-color: rgba(255,255,255,0.4);
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px);}
-      to { opacity: 1; transform: translateY(0);}
+      transform: scale(1.05);
+      box-shadow: 0 0 25px 8px rgba(255, 65, 108, 0.9);
     }
   </style>
 </head>
 <body>
-  <main>
-    <p class="description">
-      شركة Red Design هي رائدة في مجال الابتكار التقني وتطوير الحلول الرقمية المتقدمة. نسعى لتحقيق التميز من خلال الابتكار، والإبداع، والتفاني في تقديم أفضل الخدمات لعملائنا.
-      <br /><br />
-      لبدء الاستخدام، اضغط على زر "استكشف خدماتنا" أدناه واختر أحد الخيارات المتاحة.
-    </p>
-    <button id="explore-btn">استكشف خدماتنا</button>
-    <ul class="menu" id="services-menu">
-      <li onclick="location.href='htmlre.html'">صفحة HTML</li>
-      <li onclick="location.href='IMG.html'">صفحة الصور</li>
-      <li onclick="location.href='ved.html'">صفحة الفيديو</li>
-    </ul>
-  </main>
+  <p>
+    شركة <strong>Redxplet</strong> هي شركة رائدة في مجال الابتكار التقني، نعمل على تطوير حلول مبتكرة تلبي احتياجات العصر الحديث. نسعى دائماً لتحقيق التميز والجودة في كل ما نقدمه لعملائنا.
+    للبدء في الاستخدام، اضغط على زر "استكشف خدماتنا" في الأعلى.
+  </p>
+
+  <button id="explore-btn">استكشف خدماتنا</button>
 
   <script>
-    const exploreBtn = document.getElementById('explore-btn');
-    const menu = document.getElementById('services-menu');
-
-    exploreBtn.addEventListener('click', () => {
-      menu.classList.toggle('show');
+    document.getElementById('explore-btn').addEventListener('click', () => {
+      // عند الضغط على الزر، نوجه المستخدم إلى صفحة اختيار الخدمات
+      // سأجعلها تفتح صفحة تحتوي على الروابط الثلاثة (htmlre.html, IMG.html, ved.html)
+      window.location.href = 'services.html';
     });
   </script>
 </body>
