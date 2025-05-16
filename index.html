@@ -82,14 +82,14 @@
 <body>
   <div class="auth-box">
     <h2>Red Design</h2>
-    <p class="slogan">أهلاً بعودتك، سجل دخولك وابدأ العمل!</p>
+    <p class="slogan">مرحبًا بعودتك! الرجاء تسجيل الدخول للمتابعة.</p>
     <form id="login-form">
       <input type="email" id="login-email" placeholder="البريد الإلكتروني" required />
       <input type="password" id="login-password" placeholder="كلمة المرور" required />
       <button type="submit">تسجيل الدخول</button>
     </form>
 
-    <span class="toggle-link" onclick="location.href='signup.html'">ليس لديك حساب؟ إنشاء حساب</span>
+    <span id="toggle-to-signup" class="toggle-link" onclick="location.href='signup.html'">لا تملك حسابًا؟ إنشاء حساب</span>
 
     <p id="message"></p>
   </div>
@@ -120,10 +120,10 @@
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         showMessage("تم تسجيل الدخول بنجاح", "green");
         setTimeout(() => {
-          location.href = "home.html"; // عدل الصفحة الوجهة بعد تسجيل الدخول
+          window.location.href = "home.html"; // غيّر الصفحة إذا أردت توجيه المستخدم إلى مكان معين
         }, 1000);
       } catch (error) {
-        showMessage("خطأ: " + translateError(error.code), "red");
+        showMessage("خطأ: " + error.message, "red");
       }
     });
 
@@ -131,21 +131,6 @@
       const msgEl = document.getElementById("message");
       msgEl.textContent = message;
       msgEl.style.color = color;
-    }
-
-    function translateError(code) {
-      switch (code) {
-        case "auth/invalid-email":
-          return "البريد الإلكتروني غير صالح.";
-        case "auth/user-disabled":
-          return "تم تعطيل هذا المستخدم.";
-        case "auth/user-not-found":
-          return "المستخدم غير موجود.";
-        case "auth/wrong-password":
-          return "كلمة المرور غير صحيحة.";
-        default:
-          return "حدث خطأ غير متوقع.";
-      }
     }
   </script>
 </body>
