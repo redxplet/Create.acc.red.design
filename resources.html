@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>خدمات Redxplet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Cairo', sans-serif;
       background: linear-gradient(135deg, #ff4b2b, #ff416c);
       color: #fff;
       margin: 0;
@@ -19,40 +20,49 @@
       justify-content: center;
       box-sizing: border-box;
     }
+
     h1 {
-      font-size: 3rem;
+      font-size: 3.5rem;
       margin-bottom: 10px;
       font-weight: 900;
       letter-spacing: 2px;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
+
+    h1::after {
+      content: '★';
+      position: absolute;
+      left: 20px;
+      top: -10px;
+      font-size: 1.5rem;
+      color: #ffd700;
+    }
+
     h2 {
-      font-size: 1.8rem;
-      margin-bottom: 25px;
-      font-weight: 600;
-      color: #ffded9;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+      font-size: 2rem;
+      margin: 30px 0 15px;
+      font-weight: 700;
+      color: #ffe9e6;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     }
+
     p {
-      font-size: 1.25rem;
-      max-width: 700px;
-      margin: 0 auto 50px;
-      line-height: 1.8;
+      font-size: 1.3rem;
+      max-width: 720px;
+      margin: 0 auto 40px;
+      line-height: 2;
       color: #ffd9d3;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
     }
-    strong {
-      color: #fff;
-      font-weight: 900;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    }
+
     button#explore-btn {
       background-color: #fff;
       color: #ff416c;
       border: none;
       padding: 18px 50px;
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.4rem;
+      font-weight: 800;
       border-radius: 50px;
       cursor: pointer;
       transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease;
@@ -61,28 +71,28 @@
       display: block;
       width: fit-content;
     }
+
     button#explore-btn:hover {
       background-color: #ff416c;
       color: white;
-      transform: scale(1.1);
+      transform: scale(1.08);
       box-shadow: 0 12px 25px rgba(255, 65, 108, 1);
     }
 
-    /* مودال الخلفية */
     .modal {
-      display: none; /* مخفي بشكل افتراضي */
+      display: none;
       position: fixed;
       z-index: 1000;
       left: 0; top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.7);
+      background-color: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(4px);
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
-    /* محتوى المودال */
+
     .modal-content {
       background: #fff;
       color: #ff416c;
@@ -94,7 +104,7 @@
       box-shadow: 0 10px 30px rgba(255, 65, 108, 0.5);
       position: relative;
     }
-    /* زر اغلاق */
+
     .close-btn {
       position: absolute;
       top: 15px;
@@ -110,7 +120,7 @@
       cursor: pointer;
       line-height: 30px;
     }
-    /* زر روابط الخدمات */
+
     .service-btn {
       display: block;
       background-color: #ff416c;
@@ -126,10 +136,12 @@
       transition: background-color 0.3s ease, transform 0.2s ease;
       width: 100%;
     }
+
     .service-btn:hover {
       background-color: #e5383b;
       transform: scale(1.05);
     }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 2.2rem;
@@ -149,14 +161,15 @@
   </style>
 </head>
 <body>
+
   <h1>Redxplet</h1>
   <h2>من نحن</h2>
   <p>
-    شركة <strong>Redxplet</strong> هي شركة رائدة في مجال الابتكار التقني، نعمل على تطوير حلول مبتكرة تلبي احتياجات العصر الحديث. نسعى دائماً لتحقيق التميز والجودة في كل ما نقدمه لعملائنا.
-    للبدء في الاستخدام، اضغط على زر "استكشف خدماتنا" بالأسفل.
+    Redxplet هي وكالة رقمية متخصصة في الابتكار التكنولوجي، تقدم حلولًا رقمية متقدمة لتحقيق التميز في عالم سريع التطور.  
+    نبتكر باستمرار لنلبي احتياجات عملائنا بأعلى جودة.
   </p>
 
-  <button id="explore-btn">استكشف خدماتنا</button>
+  <button id="explore-btn">ابدأ الآن</button>
 
   <!-- مودال الخيارات -->
   <div class="modal" id="services-modal">
@@ -175,16 +188,15 @@
     const closeModalBtn = document.getElementById('close-modal');
 
     exploreBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';  // إظهار المودال
+      modal.style.display = 'flex';
     });
 
     closeModalBtn.addEventListener('click', () => {
-      modal.style.display = 'none';  // إخفاء المودال عند الضغط على زر الإغلاق
+      modal.style.display = 'none';
     });
 
-    // إخفاء المودال عند النقر خارج المحتوى
     window.addEventListener('click', (event) => {
-      if(event.target === modal) {
+      if (event.target === modal) {
         modal.style.display = 'none';
       }
     });
