@@ -1,62 +1,61 @@
 <!DOCTYPE html><html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <title>Redx Community</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+  <title>مجتمع Redxplet</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #2b2d31;
-      color: white;
+      background-color: #1e1f22;
+      color: #dcddde;
+      margin: 0;
+      padding: 20px;
       direction: rtl;
-    }header {
-  background-color: #1e1f22;
-  padding: 20px;
+    }h1 {
   text-align: center;
-  font-size: 28px;
-  color: #f0f0f0;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
-}
-
-.container {
-  padding: 20px;
-  max-width: 800px;
-  margin: auto;
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #ffffff;
 }
 
 .post-form, .post {
-  background-color: #313338;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  background-color: #2f3136;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease-in-out;
+}
+
+.post:hover {
+  transform: scale(1.01);
 }
 
 input[type="text"], textarea {
   width: 100%;
-  padding: 10px;
-  background-color: #1e1f22;
-  border: none;
-  border-radius: 8px;
-  color: white;
+  padding: 12px;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: #40444b;
+  color: white;
+  resize: vertical;
 }
 
 input[type="file"] {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: white;
 }
 
 button {
   background-color: #5865f2;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 25px;
+  border-radius: 30px;
   cursor: pointer;
   font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -67,42 +66,74 @@ button:hover {
   max-width: 100%;
   border-radius: 10px;
   margin-top: 10px;
+  border: 1px solid #555;
 }
 
 .reply-section {
-  margin-top: 10px;
-  background-color: #2b2d31;
-  border-radius: 8px;
+  margin-top: 15px;
+  background: #232428;
+  border-radius: 10px;
   padding: 10px;
 }
 
 .reply {
-  background-color: #40444b;
+  background: #4f545c;
   padding: 6px 12px;
-  border-radius: 6px;
-  margin-bottom: 5px;
-  color: #dcdcdc;
+  border-radius: 10px;
+  margin-bottom: 7px;
+  color: #dcddde;
+  font-size: 14px;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.username {
+  font-weight: bold;
+  color: #00b0f4;
+}
+
+.divider {
+  height: 1px;
+  background-color: #40444b;
+  margin: 15px 0;
+}
+
+::placeholder {
+  color: #999;
+}
+
+.post-form label {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  margin-top: 40px;
+  font-style: italic;
 }
 
   </style>
 </head>
-<body>
-  <header>مجتمع Redxplet</header>
-  <div class="container">
-    <div class="post-form">
-      <label>اسم المستخدم:</label>
-      <input type="text" id="username" placeholder="اسمك" /><label>نص المنشور:</label>
-  <textarea id="postText" rows="4" placeholder="بم تفكر؟"></textarea>
+<body>  <h1>مجتمع Redxplet</h1>  <div class="post-form">
+    <label>اسم المستخدم:</label>
+    <input type="text" id="username" placeholder="اسمك" /><label>نص المنشور:</label>
+<textarea id="postText" rows="4" placeholder="بم تفكر؟"></textarea>
 
-  <label>إضافة صورة (اختياري):</label>
-  <input type="file" id="imageUpload" accept="image/*" />
+<label>إضافة صورة (اختياري):</label>
+<input type="file" id="imageUpload" accept="image/*" />
 
-  <button onclick="addPost()">نشر</button>
-</div>
+<button onclick="addPost()">نشر</button>
 
-<div id="posts"></div>
+  </div>  <div id="posts"></div>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
-  </div>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyD8etiRrlhWUUHWW1ksRkeVtGP6_tRkBS0",
       authDomain: "red-community.firebaseapp.com",
@@ -114,8 +145,8 @@ button:hover {
       measurementId: "G-VH8VSVM8BP"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
     function addPost() {
       const username = document.getElementById('username').value.trim();
@@ -128,16 +159,22 @@ button:hover {
         return;
       }
 
-      const post = { username, text, image: "", replies: [] };
+      const post = {
+        username,
+        text,
+        image: "",
+        replies: [],
+        timestamp: new Date().toLocaleString()
+      };
 
       if (imageInput.files[0]) {
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           post.image = e.target.result;
-          db.ref("posts").push(post);
+          push(ref(db, "posts"), post);
         };
         reader.readAsDataURL(imageInput.files[0]);
       } else {
-        db.ref("posts").push(post);
+        push(ref(db, "posts"), post);
       }
 
       document.getElementById('username').value = "";
@@ -145,20 +182,27 @@ button:hover {
       document.getElementById('imageUpload').value = "";
     }
 
-    db.ref("posts").on("value", (snapshot) => {
+    window.addPost = addPost;
+
+    function renderPosts(data) {
       const container = document.getElementById('posts');
       container.innerHTML = "";
-      const data = snapshot.val();
-      const keys = Object.keys(data || {}).reverse();
+      if (!data) {
+        container.innerHTML = '<div class="empty">لا توجد منشورات بعد...</div>';
+        return;
+      }
 
+      const keys = Object.keys(data).reverse();
       keys.forEach(key => {
         const post = data[key];
         const postDiv = document.createElement('div');
         postDiv.className = "post";
         postDiv.innerHTML = `
-          <strong>${post.username}</strong>
+          <div class="username">${post.username}</div>
           <p>${post.text}</p>
           ${post.image ? `<img src="${post.image}" alt="post image" />` : ''}
+          <div class="timestamp">${post.timestamp}</div>
+          <div class="divider"></div>
           <div class="reply-section">
             <input type="text" placeholder="أضف ردك" onkeydown="if(event.key==='Enter'){addReply('${key}', this)}" />
             <div>${(post.replies || []).map(r => `<div class="reply">${r}</div>`).join('')}</div>
@@ -166,18 +210,24 @@ button:hover {
         `;
         container.appendChild(postDiv);
       });
+    }
+
+    const postsRef = ref(db, "posts");
+    onValue(postsRef, (snapshot) => {
+      const data = snapshot.val();
+      renderPosts(data);
     });
 
-    function addReply(postKey, input) {
+    window.addReply = async function (postKey, input) {
       const reply = input.value.trim();
       if (!reply) return;
-      const repliesRef = db.ref(`posts/${postKey}/replies`);
-      repliesRef.once("value", snapshot => {
-        const replies = snapshot.val() || [];
-        replies.push(reply);
-        repliesRef.set(replies);
-        input.value = "";
-      });
+
+      const postRef = ref(db, `posts/${postKey}/replies`);
+      const snapshot = await get(postRef);
+      const replies = snapshot.exists() ? snapshot.val() : [];
+      replies.push(reply);
+      await set(postRef, replies);
+      input.value = "";
     }
   </script></body>
 </html>
