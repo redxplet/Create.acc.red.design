@@ -1,145 +1,206 @@
-<!DOCTYPE html><html lang="ar">
+
+<!DOCTYPE html>
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <title>مجتمع Redxplet</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #1e1f22;
       color: #dcddde;
       margin: 0;
       padding: 20px;
       direction: rtl;
-    }h1 {
-  text-align: center;
-  font-size: 36px;
-  margin-bottom: 30px;
-  color: #ffffff;
-}
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-.post-form, .post {
-  background-color: #2f3136;
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease-in-out;
-}
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 30px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #5865f2;
+    }
 
-.post:hover {
-  transform: scale(1.01);
-}
+    .post-form, .post {
+      background-color: #2f3136;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease-in-out;
+      width: 100%;
+      max-width: 600px;
+    }
 
-input[type="text"], textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 10px;
-  background-color: #40444b;
-  color: white;
-  resize: vertical;
-}
+    .post:hover {
+      transform: scale(1.02);
+    }
 
-input[type="file"] {
-  margin-bottom: 15px;
-  color: white;
-}
+    label {
+      font-weight: bold;
+      color: #ffffff;
+      display: block;
+      margin-top: 15px;
+    }
 
-button {
-  background-color: #5865f2;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      background-color: #40444b;
+      color: white;
+      resize: vertical;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
 
-button:hover {
-  background-color: #4752c4;
-}
+    input[type="text"]:focus, textarea:focus {
+      outline: none;
+      background-color: #50565d;
+    }
 
-.post img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-  border: 1px solid #555;
-}
+    input[type="file"] {
+      margin-bottom: 15px;
+      color: white;
+      cursor: pointer;
+    }
 
-.reply-section {
-  margin-top: 15px;
-  background: #232428;
-  border-radius: 10px;
-  padding: 10px;
-}
+    button {
+      background-color: #5865f2;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 15px #5865f2;
+      width: 100%;
+      font-size: 1.1rem;
+    }
 
-.reply {
-  background: #4f545c;
-  padding: 6px 12px;
-  border-radius: 10px;
-  margin-bottom: 7px;
-  color: #dcddde;
-  font-size: 14px;
-}
+    button:hover {
+      background-color: #4752c4;
+      box-shadow: 0 0 20px #4752c4;
+    }
 
-.timestamp {
-  font-size: 12px;
-  color: #999;
-  margin-top: 4px;
-}
+    .post img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+      border: 1px solid #555;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      cursor: zoom-in;
+      transition: transform 0.3s ease;
+    }
 
-.username {
-  font-weight: bold;
-  color: #00b0f4;
-}
+    .post img:hover {
+      transform: scale(1.05);
+    }
 
-.divider {
-  height: 1px;
-  background-color: #40444b;
-  margin: 15px 0;
-}
+    .reply-section {
+      margin-top: 15px;
+      background: #232428;
+      border-radius: 10px;
+      padding: 10px;
+    }
 
-::placeholder {
-  color: #999;
-}
+    .reply-section input[type="text"] {
+      background-color: #40444b;
+      color: #dcddde;
+      font-size: 1rem;
+      padding: 8px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+    }
 
-.post-form label {
-  font-weight: bold;
-  color: #ffffff;
-}
+    .reply-section input[type="text"]:focus {
+      background-color: #50565d;
+      outline: none;
+    }
 
-.empty {
-  text-align: center;
-  color: #777;
-  margin-top: 40px;
-  font-style: italic;
-}
+    .reply {
+      background: #4f545c;
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 7px;
+      color: #dcddde;
+      font-size: 0.9rem;
+      box-shadow: inset 0 0 5px #00000066;
+    }
 
+    .timestamp {
+      font-size: 12px;
+      color: #999;
+      margin-top: 6px;
+      font-style: italic;
+      text-align: left;
+    }
+
+    .username {
+      font-weight: bold;
+      color: #00b0f4;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #40444b;
+      margin: 15px 0;
+    }
+
+    ::placeholder {
+      color: #999;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      margin-top: 40px;
+      font-style: italic;
+      font-size: 1.2rem;
+    }
   </style>
 </head>
-<body>  <h1>مجتمع Redxplet</h1>  <div class="post-form">
-    <label>اسم المستخدم:</label>
-    <input type="text" id="username" placeholder="اسمك" /><label>نص المنشور:</label>
-<textarea id="postText" rows="4" placeholder="بم تفكر؟"></textarea>
+<body>
 
-<label>إضافة صورة (اختياري):</label>
-<input type="file" id="imageUpload" accept="image/*" />
+  <h1>مجتمع Redxplet</h1>
 
-<button onclick="addPost()">نشر</button>
+  <div class="post-form">
+    <label for="username">اسم المستخدم:</label>
+    <input type="text" id="username" placeholder="اسمك" autocomplete="off" />
 
-  </div>  <div id="posts"></div>  <script type="module">
+    <label for="postText">نص المنشور:</label>
+    <textarea id="postText" rows="4" placeholder="بم تفكر؟"></textarea>
+
+    <label for="imageUpload">إضافة صورة (اختياري):</label>
+    <input type="file" id="imageUpload" accept="image/*" />
+
+    <button onclick="addPost()">نشر</button>
+  </div>
+
+  <div id="posts"></div>
+
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD8etiRrlhWUUHWW1ksRkeVtGP6_tRkBS0",
       authDomain: "red-community.firebaseapp.com",
-      databaseURL: "https://red-community-default-rtdb.europe-west1.firebaseddatabase.app",
+      databaseURL: "https://red-community-default-rtdb.europe-west1.firebasedatabase.app",
       projectId: "red-community",
-      storageBucket: "red-community.firebasestorage.app",
+      storageBucket: "red-community.appspot.com",
       messagingSenderId: "298815913579",
       appId: "1:298815913579:web:85e7fde34f3ed11c99fb2e",
       measurementId: "G-VH8VSVM8BP"
@@ -200,7 +261,7 @@ button:hover {
         postDiv.innerHTML = `
           <div class="username">${post.username}</div>
           <p>${post.text}</p>
-          ${post.image ? `<img src="${post.image}" alt="post image" />` : ''}
+          ${post.image ? `<img src="${post.image}" alt="صورة المنشور" />` : ''}
           <div class="timestamp">${post.timestamp}</div>
           <div class="divider"></div>
           <div class="reply-section">
@@ -229,5 +290,7 @@ button:hover {
       await set(postRef, replies);
       input.value = "";
     }
-  </script></body>
+  </script>
+
+</body>
 </html>
